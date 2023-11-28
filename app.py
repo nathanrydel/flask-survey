@@ -31,3 +31,22 @@ def show_question(question_id):
     current_question = survey.questions[question_id]
 
     return render_template("question.html", question = current_question)
+
+@app.post("/answer")
+def handle_question_submission():
+    """Appends answer to responses list, then redirects to next question"""
+
+    answer = request.form["answer"]
+    responses.append(answer)
+
+    if len(responses) == len(survey.questions):
+        return redirect("/thanks")
+    else:
+        return redirect(f"/questions/{len(responses)}")
+
+@app.get("/thanks")
+def thank_user():
+    """Displays thank you page with survey responses"""
+    #TODO: Also handle displaying survey responses
+
+    return render_template("completion.html")
