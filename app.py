@@ -4,7 +4,7 @@ from surveys import satisfaction_survey as survey
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "never-tell!"
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
@@ -23,3 +23,11 @@ def start_survey():
     """Start the survey"""
 
     return redirect("/questions/0")
+
+@app.get("/questions/<int:question_id>")
+def show_question(question_id):
+    """Show current question as form"""
+
+    current_question = survey.questions[question_id]
+
+    return render_template("question.html", question = current_question)
