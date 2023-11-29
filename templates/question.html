@@ -16,6 +16,10 @@
       </p>
       {% endfor %}
 
+      {% for msg in get_flashed_messages() %}
+        <p style="color: red">{{ msg }}</p>
+      {% endfor %}
+
     <button>Continue</button>
   </form>
 

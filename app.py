@@ -12,7 +12,7 @@ debug = DebugToolbarExtension(app)
 @app.get("/")
 def show_survey_home():
     """Show survey title, instructions, and a button"""
-    # session["responses"] = []
+    session["responses"] = []
 
     return render_template("survey_start.html", survey=survey)
 
@@ -31,17 +31,16 @@ def start_survey():
 def show_question(question_id):
     """Show current question as form"""
 
-    # TODO: modify to check that user has answered question and check that they are
-    # on the correct question
-
     responses = session["responses"]
 
     if len(responses) == len(survey.questions):
+        flash("You've already answered all the questions!")
         return redirect("/thanks")
     elif question_id == len(responses):
         current_question = survey.questions[question_id]
         return render_template("question.html", question=current_question)
     else:
+        flash("Please answer questions in order")
         return redirect(f"/questions/{len(responses)}")
 
 
