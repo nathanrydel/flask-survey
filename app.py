@@ -11,7 +11,9 @@ debug = DebugToolbarExtension(app)
 
 @app.get("/")
 def show_survey_home():
-    """Show survey title, instructions, and a button"""
+    """Show survey title, instructions, and a button. Clears
+    session["responses"] on page load"""
+
     session["responses"] = []
 
     return render_template("survey_start.html", survey=survey)
@@ -29,7 +31,9 @@ def start_survey():
 
 @app.get("/questions/<int:question_id>")
 def show_question(question_id):
-    """Show current question as form"""
+    """Show current question as form; redirects user to next unanswered question
+    if they try to access questions out of order, or thank-you page if they've
+    already completed the form, with accompanying flash messages"""
 
     responses = session["responses"]
 
@@ -46,8 +50,8 @@ def show_question(question_id):
 
 @app.post("/answer")
 def handle_question_submission():
-    """Appends answer to responses list, then redirects to next question or
-    thank you page if all questions have answers"""
+    """Adds answer to session["responses"], then redirects to next question
+    or thank you page if all questions have answers"""
 
     answer = request.form["answer"]
 
