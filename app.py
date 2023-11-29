@@ -24,6 +24,7 @@ def start_survey():
 
     return redirect("/questions/0")
 
+
 @app.get("/questions/<int:question_id>")
 def show_question(question_id):
     """Show current question as form"""
@@ -32,9 +33,11 @@ def show_question(question_id):
 
     return render_template("question.html", question = current_question)
 
+
 @app.post("/answer")
 def handle_question_submission():
-    """Appends answer to responses list, then redirects to next question"""
+    """Appends answer to responses list, then redirects to next question or
+    thank you page if all questions have answers"""
 
     answer = request.form["answer"]
     responses.append(answer)
@@ -44,10 +47,10 @@ def handle_question_submission():
     else:
         return redirect(f"/questions/{len(responses)}")
 
+
 @app.get("/thanks")
 def thank_user():
     """Displays thank you page with survey responses"""
-    #TODO: Also handle displaying survey responses
 
     return render_template("completion.html"
                            , questions=survey.questions
