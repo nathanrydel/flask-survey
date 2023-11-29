@@ -8,13 +8,20 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
+SESSION_RESPONSES_KEY = "responses"
+
+#TODO: Change root directory to a survey menu
+#TODO: Handle submission to pick the survey, submit to next page
+#TODO: Move show_survey_home() view function to a new endpoint
+#TODO: Add survey variables to all non-root endpoints for tracking
+
 
 @app.get("/")
 def show_survey_home():
     """Show survey title, instructions, and a button. Clears
     session["responses"] on page load"""
 
-    session["responses"] = []
+    # session["responses"] = []
 
     return render_template("survey_start.html", survey=survey)
 
@@ -24,7 +31,7 @@ def start_survey():
     """Start the survey"""
 
     # putting in the show function to clear everytime home page renders
-    # session["responses"] = []
+    session[SESSION_RESPONSES_KEY] = []
 
     return redirect("/questions/0")
 
@@ -35,7 +42,7 @@ def show_question(question_id):
     if they try to access questions out of order, or thank-you page if they've
     already completed the form, with accompanying flash messages"""
 
-    responses = session["responses"]
+    responses = session[SESSION_RESPONSES_KEY]
 
     if len(responses) == len(survey.questions):
         flash("You've already answered all the questions!")
@@ -53,11 +60,16 @@ def handle_question_submission():
     """Adds answer to session["responses"], then redirects to next question
     or thank you page if all questions have answers"""
 
-    answer = request.form["answer"]
+    responses = session[SESSION_RESPONSES_KEY]
 
-    responses = session["responses"]
+    if request.form.get("answer"):
+        answer = request.form["answer"]
+    else:
+        flash("Please choose an answer!")
+        return redirect(f"/questions/{len(responses)}")
+
     responses.append(answer)
-    session["responses"] = responses
+    session[SESSION_RESPONSES_KEY] = responses
 
     if len(responses) == len(survey.questions):
         return redirect("/thanks")
@@ -69,7 +81,7 @@ def handle_question_submission():
 def thank_user():
     """Displays thank you page with survey responses"""
 
-    responses = session["responses"]
+    responses = session[SESSION_RESPONSES_KEY]
 
     return render_template("completion.html",
                            questions=survey.questions,
