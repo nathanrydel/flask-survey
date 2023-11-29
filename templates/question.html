@@ -12,6 +12,7 @@
     {{ choice }}
   </p>
   {% endfor %}
+  <input type="hidden" name="survey_key" value="{{survey_key}}">
 
   {% for msg in get_flashed_messages() %}
   <p style="color: red">{{ msg }}</p>
