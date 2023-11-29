@@ -21,6 +21,7 @@ def show_survey_home():
 @app.post("/begin")
 def start_survey():
     """Start the survey"""
+    responses.clear()
 
     return redirect("/questions/0")
 
@@ -31,7 +32,7 @@ def show_question(question_id):
 
     current_question = survey.questions[question_id]
 
-    return render_template("question.html", question = current_question)
+    return render_template("question.html", question=current_question)
 
 
 @app.post("/answer")
@@ -52,6 +53,6 @@ def handle_question_submission():
 def thank_user():
     """Displays thank you page with survey responses"""
 
-    return render_template("completion.html"
-                           , questions=survey.questions
-                           , answers=responses)
+    return render_template("completion.html",
+                        questions=survey.questions,
+                        answers=responses)
