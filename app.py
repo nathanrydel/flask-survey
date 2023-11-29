@@ -4,7 +4,7 @@ from surveys import satisfaction_survey as survey
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "never-tell!"
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
@@ -49,4 +49,6 @@ def thank_user():
     """Displays thank you page with survey responses"""
     #TODO: Also handle displaying survey responses
 
-    return render_template("completion.html")
+    return render_template("completion.html"
+                           , questions=survey.questions
+                           , answers=responses)
