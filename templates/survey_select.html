@@ -4,10 +4,10 @@
 
 {# TODO: Choose endpoint to send data #}
 
-<form method="POST" action="">
+<form method="POST" action="/selection">
   <h2>Pick a survey!</h2>
 
-  <select name="surveys">
+  <select name="survey_selection">
     {# TODO: Loop over the surveys #}
     {% for id, survey in surveys.items() %}
     <option value="{{ id }}" aria-label="{{ survey.title }}">{{ survey.title }}</option>
