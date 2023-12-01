@@ -10,11 +10,6 @@ debug = DebugToolbarExtension(app)
 
 SESSION_RESPONSES_KEY = "responses"
 
-# TODO: Change root directory to a survey menu
-# TODO: Handle submission to pick the survey, submit to next page
-# TODO: Move show_survey_home() view function to a new endpoint
-# TODO: Add survey variables to all non-root endpoints for tracking
-
 
 @app.get("/")
 def show_survey_select_menu():
@@ -22,14 +17,18 @@ def show_survey_select_menu():
 
     return render_template("survey_select.html", surveys=surveys)
 
-# @app.get("/")
-# def show_survey_home():
-#     """Show survey title, instructions, and a button. Clears
-#     session["responses"] on page load"""
 
-#     # session["responses"] = []
+@app.post("/selection")
+def show_survey_home():
+    """Show survey title, instructions, and a button. Clears
+    session["responses"] on page load"""
 
-#     return render_template("survey_start.html", survey=survey)
+    survey_title = request.form["survey_selection"]
+    survey = surveys[survey_title]
+
+    return render_template("survey_start.html", survey=survey)
+
+# TODO: Add survey variables to all non-root endpoints for tracking
 
 
 @app.post("/begin")
