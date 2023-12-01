@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block content %}
 <h1>Choose a survey</h1>
 
 {# TODO: Choose endpoint to send data #}
@@ -7,10 +8,13 @@
 <form method="POST" action="">
   <h3>Pick a survey!</h3>
 
-  <select>
+  <select name="surveys">
     {# TODO: Loop over the surveys #}
-    <option value="survey-id-placeholder" aria-label="survey-id-placeholder">SURVEY TITLE PLACHOLDER - REPLACE WITH
-      JINJA</option>
+    {% for id, survey in surveys.items() %}
+    <option value="{{ id }}" aria-label="{{ survey.title }}">{{ survey.title }}</option>
+    {% endfor %}
   </select>
   <button>Enter!</button>
 </form>
+
+{% endblock %}
