@@ -72,18 +72,17 @@ def handle_question_submission():
     or thank you page if all questions have answers"""
 
     responses = session[SESSION_RESPONSES_KEY]
+    survey_key = request.form["survey_key"]
+    survey = surveys[survey_key]
 
     if request.form.get("answer"):
         answer = request.form["answer"]
     else:
         flash("Please choose an answer!")
-        return redirect(f"/questions/{len(responses)}")
+        return redirect(f"/{survey_key}/questions/{len(responses)}")
 
     responses.append(answer)
     session[SESSION_RESPONSES_KEY] = responses
-
-    survey_key = request.form["survey_key"]
-    survey = surveys[survey_key]
 
     if len(responses) == len(survey.questions):
         return redirect(f"/{survey_key}/thanks")
