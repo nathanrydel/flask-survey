@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1> {{ survey.title }}</h1>
-<p>
-  {{ survey.instructions}}
-</p>
+<div class="container">
+  <h2> {{ survey.title }} </h2>
+  <p>
+    {{ survey.instructions}}
+  </p>
+</div>
 
 <!--
     DO NOT CHANGE THE FORM ACTION OR METHOD
     You'll need to write the applicable code to handle this request
    -->
-<form action="/begin" method="POST">
-  <input name="survey_key" type="hidden" value="{{ survey_key }}">
-  <button>Start!</button>
-</form>
+<div class="container">
+  <form action="/begin" method="POST">
+    <input name="survey_key" type="hidden" value="{{ survey_key }}">
+    <button>Start!</button>
+  </form>
+</div>
 
 {% endblock %}

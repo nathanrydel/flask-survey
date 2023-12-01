@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from surveys import surveys, satisfaction_survey as survey
+from surveys import surveys
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "never-tell!"

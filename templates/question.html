@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ question.prompt }}</h1>
+<h2>{{ question.prompt }}</h2>
 
 <form action="/answer" method="POST">
 
@@ -18,7 +18,7 @@
   <p style="color: red">{{ msg }}</p>
   {% endfor %}
 
-  <button>Continue</button>
+  <button class="btn btn-primary">Continue</button>
 </form>
 
 {% endblock %}
