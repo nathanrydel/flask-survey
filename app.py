@@ -12,6 +12,7 @@ debug = DebugToolbarExtension(app)
 @app.get("/")
 def show_survey_home():
     """Show survey title, instructions, and a button"""
+    # session["responses"] = []
 
     return render_template("survey_start.html", survey=survey)
 
@@ -19,7 +20,9 @@ def show_survey_home():
 @app.post("/begin")
 def start_survey():
     """Start the survey"""
-    session["responses"] = []
+
+    # putting in the show function to clear everytime home page renders
+    # session["responses"] = []
 
     return redirect("/questions/0")
 
@@ -28,9 +31,18 @@ def start_survey():
 def show_question(question_id):
     """Show current question as form"""
 
-    current_question = survey.questions[question_id]
+    # TODO: modify to check that user has answered question and check that they are
+    # on the correct question
 
-    return render_template("question.html", question=current_question)
+    responses = session["responses"]
+
+    if len(responses) == len(survey.questions):
+        return redirect("/thanks")
+    elif question_id == len(responses):
+        current_question = survey.questions[question_id]
+        return render_template("question.html", question=current_question)
+    else:
+        return redirect(f"/questions/{len(responses)}")
 
 
 @app.post("/answer")
