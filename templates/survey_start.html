@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
+
+{% block title %} {{ survey.title }} {% endblock %}
+
 {% block content %}
 
-<div class="container">
+<div class="container mt-5 text-center">
   <h2> {{ survey.title }} </h2>
   <p>
     {{ survey.instructions}}
@@ -15,7 +18,7 @@
 <div class="container">
   <form action="/begin" method="POST">
     <input name="survey_key" type="hidden" value="{{ survey_key }}">
-    <button>Start!</button>
+    <button class="btn btn-primary mx-auto my-4 d-block">Start!</button>
   </form>
 </div>
 
