@@ -5,16 +5,16 @@
 {% block content %}
 
 <div class="container">
-  <form class="mt-3 display-flex" method="POST" action="/selection">
+  <form class="mt-3" method="POST" action="/selection">
     <h2>Pick a survey!</h2>
 
-    <select class="form-select form-select-lg my-3 col-3 lg-col-4" name="survey_selection">
+    <select class="form-select form-select-lg my-3 col-3 col-lg-4" name="survey_selection">
       <option disabled selected value>Choose a survey</option>
       {% for id, survey in surveys.items() %}
       <option value="{{ id }}" aria-label="{{ survey.title }}">{{ survey.title }}</option>
       {% endfor %}
     </select>
-    <button class="ms-3 btn btn-primary">Enter!</button>
+    <button class="btn btn-primary mx-auto d-block">Enter!</button>
   </form>
 </div>
 
