@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+  <h2 class="mt-4 text-center">Thanks for completing this survey!</h2>
+  <div class="col-4 col-lg-6 mx-auto mt-4">
+    {% for msg in get_flashed_messages() %}
+    <p class="text-danger">{{ msg }}</p>
+    {% endfor %}
 
-<h2>Thanks for completing this survey!</h2>
-
-{% for msg in get_flashed_messages() %}
-<p style="color: red">{{ msg }}</p>
-{% endfor %}
-
-<ul>
-  {% for i in range(questions | length) %}
-  <li><b>{{ questions[i].prompt }}</b>: {{ answers[i] }}</li>
-  {% endfor %}
-</ul>
-
+    <ul class="list-group">
+      {% for i in range(questions | length) %}
+      <li class="list-group-item">
+        <span class="fw-bold">{{ questions[i].prompt }}</span> {{ answers[i] }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <a href="{{ url_for('return_home')}}" class="btn btn-primary my-5 mx-auto d-block col-lg-2">Return Home</a>
+</div>
 {% endblock %}
