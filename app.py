@@ -100,3 +100,10 @@ def thank_user(survey_key):
     return render_template("completion.html",
                            questions=survey.questions,
                            answers=responses)
+
+
+@app.get("/return-home")
+def return_home():
+    """Handle GET request when the "Return Home" button is clicked"""
+
+    return redirect("/")
