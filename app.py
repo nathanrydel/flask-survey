@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from surveys import satisfaction_survey as survey
+from surveys import surveys, satisfaction_survey as survey
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "never-tell!"
@@ -10,20 +10,26 @@ debug = DebugToolbarExtension(app)
 
 SESSION_RESPONSES_KEY = "responses"
 
-#TODO: Change root directory to a survey menu
-#TODO: Handle submission to pick the survey, submit to next page
-#TODO: Move show_survey_home() view function to a new endpoint
-#TODO: Add survey variables to all non-root endpoints for tracking
+# TODO: Change root directory to a survey menu
+# TODO: Handle submission to pick the survey, submit to next page
+# TODO: Move show_survey_home() view function to a new endpoint
+# TODO: Add survey variables to all non-root endpoints for tracking
 
 
 @app.get("/")
-def show_survey_home():
-    """Show survey title, instructions, and a button. Clears
-    session["responses"] on page load"""
+def show_survey_select_menu():
+    """Show survey select menu for user to choose survey"""
 
-    # session["responses"] = []
+    return render_template("survey_select.html", surveys=surveys)
 
-    return render_template("survey_start.html", survey=survey)
+# @app.get("/")
+# def show_survey_home():
+#     """Show survey title, instructions, and a button. Clears
+#     session["responses"] on page load"""
+
+#     # session["responses"] = []
+
+#     return render_template("survey_start.html", survey=survey)
 
 
 @app.post("/begin")
